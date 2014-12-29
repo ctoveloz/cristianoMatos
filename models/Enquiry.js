@@ -47,7 +47,7 @@ Enquiry.schema.methods.sendNotificationEmail = function(callback) {
 			to: admins,
 			from: {
 				name: 'KeystoneJS',
-				email: 'contact@keystonejs.com'
+				email: 'ctoveloz@gmail.com'
 			},
 			subject: 'New Enquiry for KeystoneJS',
 			enquiry: enqiury

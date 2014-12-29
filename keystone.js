@@ -10,6 +10,7 @@ var keystone = require('keystone');
 // and documentation.
 
 keystone.init({
+	'cloudinary config': 'cloudinary://695316824865783:k0S8UONMrXUYsJj2I4Ii-yferjU@hsnbgtcq2',
 
 	'name': 'KeystoneJS',
 	'brand': 'KeystoneJS',
