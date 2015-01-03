@@ -1,6 +1,7 @@
 // Simulate config options from your production environment by
 // customising the .env file in your project's root folder.
 require('dotenv').load();
+require('newrelic').load();
 
 
 // Require keystone
@@ -100,4 +101,3 @@ keystone.set('nav', {
 
 // Start Keystone to connect to your database and initialise the web server
 keystone.start();
-require('newrelic');
