@@ -3,6 +3,12 @@ extends ../layouts/default
 block content
 	section.sliderHome: .container.text-center 
 		p pior que essa merda funciona
+	section.twetts: .container
+		each i in new Array(3)
+			div.col-md-4
+				each i in new Array(4)
+					div.container-twetts
+						p twett louco cara
 
 block content
 	.container: .jumbotron
