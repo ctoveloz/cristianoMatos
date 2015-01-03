@@ -1,8 +1,10 @@
 // Simulate config options from your production environment by
 // customising the .env file in your project's root folder.
+require('newrelic');
 require('dotenv').load();
 
 // Require keystone
+var newrelic = require('newrelic');
 var keystone = require('keystone');
 
 // Initialise Keystone with your project's configuration.
