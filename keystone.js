@@ -4,7 +4,6 @@ require('dotenv').load();
 
 // Require keystone
 var keystone = require('keystone');
-var Twit = require('twit');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -98,22 +97,6 @@ keystone.set('nav', {
 	'enquiries': 'enquiries',
 	'users': 'users'
 });
-
-// TWITTER CONFIG
-var T = new Twit({
-    consumer_key: 'qfUTPLLRHZ71HD6k1Dv9rqSPY'
-  , consumer_secret: 'UgGNtsiqA0v8Z6wwUL4A9oiFU8aCdmA2zjDGZs6YI5eal7rM3e'
-  , access_token: '1711581343-M0N8Ih4uMkVkgKzU6IwImTIrB3kZZxlhJlfFizN'
-  , access_token_secret: 'ddVcKvkWEcPMNu701upuNj90ERrBo42QAgwZxKdYdNf4K'
-})
-
-//
-//  get the list of user id's that follow @tolga_tezel
-//
-T.get('statuses/user_timeline', { screen_name: 'ctoveloz' },  function (err, data, response) {
-  console.log(data)
-})
-
 
 
 // Start Keystone to connect to your database and initialise the web server
