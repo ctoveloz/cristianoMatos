@@ -3,7 +3,6 @@
 require('dotenv').load();
 
 // Require keystone
-var newrelic = require('newrelic');
 var keystone = require('keystone');
 
 // Initialise Keystone with your project's configuration.
