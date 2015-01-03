@@ -1,4 +1,4 @@
-require('newrelic');
+var newrelic = require('newrelic');
 var keystone = require('keystone'),
 	Types = keystone.Field.Types;
 
