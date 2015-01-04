@@ -19,6 +19,7 @@
  */
 
 var keystone = require('keystone'),
+	newrelic = require('newrelic'),
 	middleware = require('./middleware'),
 	importRoutes = keystone.importer(__dirname);
 
