@@ -5,8 +5,6 @@
  * description of configuration variables and their potential values.
  */
 
-var keystone = require('keystone');
-
 exports.config = {
   /**
    * Array of application names.
