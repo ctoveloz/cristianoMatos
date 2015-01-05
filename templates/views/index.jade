@@ -1,8 +1,20 @@
 extends ../layouts/default
 
 block content
-	section.sliderHome: .container.text-center 
-		p pior que essa merda funciona
+	section.sliderHome: .text-center 
+			div.sliderPortfolio
+				div.slider1: .sliderBackground: .imageContainer
+					img(src='/images/portfolio/rainbowsix.jpg')
+				div.slider2: .sliderBackground: .imageContainer
+					img(src='/images/portfolio/justdance.jpg')
+				div.slider3: .sliderBackground: .imageContainer
+					img(src='/images/portfolio/rainbowsix.jpg')
+				div.slider4: .sliderBackground: .imageContainer
+					img(src='/images/portfolio/rainbowsix.jpg')
+				div.slider5: .sliderBackground: .imageContainer
+					img(src='/images/portfolio/rainbowsix.jpg')
+				div.slider6: .sliderBackground: .imageContainer
+					img(src='/images/portfolio/rainbowsix.jpg')
 	section.twetts: .container
 			div.col-md-4.text-center
 				a.twitter-timeline(href='https://twitter.com/ctoveloz', data-widget-id='551526830986231810') Tweets por el @ctoveloz.
