@@ -115,7 +115,7 @@ function GithubRepo(a){this.description=a.description,this.forks=a.forks_count,t
 			if(badge.earned) {
 				total++
 				if(count < 30 && badge.level === 1) {
-					content += '<img src="' + badge.image_link + '" width="256" height="256" title="' + badge.name + ' - ' + badge.description + '" alt="' + badge.level + ' bit ' + badge.name + ' - ' + badge.description + '">';
+					content += '<img src="' + badge.image_link + '" width="40" height="40" title="' + badge.name + ' - ' + badge.description + '" alt="' + badge.level + ' bit ' + badge.name + ' - ' + badge.description + '">';
 					count++
 				}
 			}
