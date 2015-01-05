@@ -1,5 +1,224 @@
 /* GITHUB */
-(function(e){var t="http://lab.lepture.com/github-cards/";var r,i=0;var a=e.getElementsByTagName("meta");var n,l,c,d;for(r=0;r<a.length;r++){var u=a[r].getAttribute("name");var f=a[r].getAttribute("content");if(u==="gc:url"){n=f}else if(u==="gc:base"){t=f}else if(u==="gc:client-id"){l=f}else if(u==="gc:client-secret"){c=f}else if(u==="gc:theme"){d=f}}function s(t){if(e.querySelectorAll){return e.querySelectorAll("."+t)}var i=e.getElementsByTagName("div");var a=[];for(r=0;r<i.length;r++){if(~i[r].className.split(" ").indexOf(t)){a.push(i[r])}}return a}function g(e,t){return e.getAttribute("data-"+t)}function h(e){if(window.addEventListener){window.addEventListener("message",function(t){if(e.id===t.data.sender){e.height=t.data.height}},false)}}function o(r,a){a=a||n;if(!a){var u=g(r,"theme")||d||"default";a=t+"cards/"+u+".html"}var f=g(r,"user");var s=g(r,"repo");var o=g(r,"github");if(o){o=o.split("/");if(o.length&&!f){f=o[0];s=s||o[1]}}if(!f){return}i+=1;var v=g(r,"width");var m=g(r,"height");var b=g(r,"target");var p=g(r,"client-id")||l;var w=g(r,"client-secret")||c;var A="ghcard-"+f+"-"+i;var y=e.createElement("iframe");y.setAttribute("id",A);y.setAttribute("frameborder",0);y.setAttribute("scrolling",0);y.setAttribute("allowtransparency",true);var E=a+"?user="+f+"&identity="+A;if(s){E+="&repo="+s}if(b){E+="&target="+b}if(p&&w){E+="&client_id="+p+"&client_secret="+w}y.src=E;y.width=v||Math.min(r.parentNode.clientWidth||400,400);if(m){y.height=m}h(y);r.parentNode.replaceChild(y,r);return y}var v=s("github-card");for(r=0;r<v.length;r++){o(v[r])}if(window.githubCard){window.githubCard.render=o}})(document);
+(function(d) {
+  var baseurl = 'https://api.github.com/', i;
+
+  function querystring() {
+    var href = window.location.href, kv;
+    var params = href.slice(href.indexOf('?') + 1).split('&');
+    var qs = [];
+
+    for (i = 0; i < params.length; i++) {
+      kv = params[i].split('=');
+      qs.push(kv[0]);
+      qs[kv[0]] = kv[1];
+    }
+    return qs;
+  }
+
+  function store(key, value) {
+    try {
+      if (window.localStorage) {
+        if (value) {
+          value._timestamp = new Date().valueOf();
+          localStorage[key] = JSON.stringify(value);
+        } else {
+          var ret = localStorage[key];
+          if (ret) {
+            return JSON.parse(ret);
+          }
+          return null;
+        }
+      }
+    } catch(e) {}
+  }
+
+  function valueof(data, key) {
+    var ret = data;
+    var bits = key.split('.');
+    for (var j = 0; j < bits.length; j++) {
+      if (ret) {
+        ret = ret[bits[j]];
+      } else {
+        break;
+      }
+    }
+    if (ret === undefined || ret === null) {
+      return '';
+    }
+    return ret;
+  }
+
+  var qs = querystring();
+
+  function template(type, data) {
+    var t = d.getElementById(type + '-card');
+    var regex = /{([^}]+)}/g;
+    var text = t.innerHTML;
+    var m = text.match(regex);
+    for (i = 0; i < m.length; i++) {
+      text = text.replace(m[i], valueof(data, m[i].slice(1, -1)));
+    }
+    return text;
+  }
+
+  function request(url, callback) {
+    var cache = store(url);
+    if (cache && cache._timestamp) {
+      // cache in 10s
+      if (new Date().valueOf() - cache._timestamp < 10000) {
+        return callback(cache);
+      }
+    }
+    if (qs.client_id && qs.client_secret) {
+      url += '?client_id=' + qs.client_id + '&client_secret=' + qs.client_secret;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, false);
+    xhr.onload = function() {
+      callback(JSON.parse(xhr.response));
+    };
+    xhr.send();
+  }
+
+  function linky(card, identity) {
+    var links = card.getElementsByTagName('a');
+    for (i = 0; i < links.length; i++) {
+      (function(link) {
+        link.target = '_' + (qs.target || 'top');
+      })(links[i]);
+    }
+    d.body.appendChild(card);
+    d.body.className = 'ready';
+    if (parent !== self && parent.postMessage) {
+      var height = Math.max(
+        d.body.scrollHeight,
+        d.documentElement.scrollHeight,
+        d.body.offsetHeight,
+        d.documentElement.offsetHeight,
+        d.body.clientHeight,
+        d.documentElement.clientHeight
+      );
+      parent.postMessage({
+        height: height,
+        sender: qs.identity || '*'
+      }, '*');
+    }
+  }
+
+  function userCard(user) {
+    var url = baseurl + 'users/' + user;
+    request(url, function(data) {
+      data = data || {};
+      var message = data.message;
+      var defaults = '0';
+      if (message) {
+        data = store(url) || data;
+        defaults = '?';
+      } else {
+        store(url, data);
+      }
+      data.login = user;
+      data.public_repos = numberic(data.public_repos) || defaults;
+      data.public_gists = numberic(data.public_gists) || defaults;
+      data.followers = numberic(data.followers) || defaults;
+
+      var job = 'Not available for hire.';
+      if (data.hireable) {
+        var link = '';
+        if (data.email) {
+          link = 'mailto:' + data.email;
+        } else if (data.blog) {
+          link = data.blog;
+        } else {
+          link = data.html_url;
+        }
+        job = '<a href="' + link + '">Available for hire.</a>';
+      }
+      if (message) {
+        job = message;
+      }
+      data.job = job;
+
+      var card = d.createElement('div');
+      card.className = 'github-card user-card';
+      card.innerHTML = template('user', data);
+      linky(card);
+    });
+  }
+
+  function repoCard(user, repo) {
+    var url = baseurl + 'repos/' + user + '/' + repo;
+    request(url, function(data) {
+      data = data || {};
+      var message = data.message;
+      var defaults = '0';
+      if (message) {
+        data = store(url) || data;
+        defaults = '?';
+      } else {
+        store(url, data);
+      }
+      data.login = user;
+
+      data.avatar_url = '';
+      if (data.owner && data.owner.avatar_url) {
+        data.avatar_url = data.owner.avatar_url;
+      }
+      data.forks_count = numberic(data.forks_count) || defaults;
+      data.watchers_count = numberic(data.watchers_count) || defaults;
+      if (data.fork) {
+        data.action = 'Forked by ';
+      } else {
+        data.action = 'Created by ';
+      }
+      var description = data.description;
+      if (!description && data.source) {
+        description = data.source.description;
+      }
+      if (!description && message) {
+        description = message;
+      }
+      data.description = description || 'No description';
+      var homepage = data.homepage;
+      if (!homepage && data.source) {
+        homepage = data.source.homepage;
+      }
+      if (homepage) {
+        data.homepage = ' <a href="' + homepage + '">' + homepage.replace(/https?:\/\//, '').replace(/\/$/, '') + '</a>';
+      } else {
+        data.homepage = '';
+      }
+
+      var card = d.createElement('div');
+      card.className = 'github-card repo-card';
+      card.innerHTML = template('repo', data);
+      linky(card);
+    });
+  }
+
+  function errorCard() {
+  }
+
+  function numberic(num) {
+    if (!num) return null;
+    if (num === 1000) return 1;
+    if (num < 1000) return num;
+    num = num / 1000;
+    if (num > 10) return parseInt(num, 10) + 'k';
+    return num.toFixed(1) + 'k';
+  }
+
+  if (!qs.user) {
+    errorCard();
+  } else if (qs.repo) {
+    repoCard(qs.user, qs.repo);
+  } else {
+    userCard(qs.user);
+  }
+
+})(document);
+
+
 
 /*
  *  jquery-github - v0.4.0
