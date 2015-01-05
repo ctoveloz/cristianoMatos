@@ -1,5 +1,223 @@
 /* github */
-!function(e){function t(){var e,t=window.location.href,r=t.slice(t.indexOf("?")+1).split("&"),a=[];for(p=0;p<r.length;p++)e=r[p].split("="),a.push(e[0]),a[e[0]]=e[1];return a}function r(e,t){try{if(window.localStorage){if(!t){var r=localStorage[e];return r?JSON.parse(r):null}t._timestamp=(new Date).valueOf(),localStorage[e]=JSON.stringify(t)}}catch(a){}}function a(e,t){for(var r=e,a=t.split("."),n=0;n<a.length&&r;n++)r=r[a[n]];return void 0===r||null===r?"":r}function n(t,r){var n=e.getElementById(t+"-card"),o=/{([^}]+)}/g,i=n.innerHTML,l=i.match(o);for(p=0;p<l.length;p++)i=i.replace(l[p],a(r,l[p].slice(1,-1)));return i}function o(e,t){var a=r(e);if(a&&a._timestamp&&(new Date).valueOf()-a._timestamp<1e4)return t(a);d.client_id&&d.client_secret&&(e+="?client_id="+d.client_id+"&client_secret="+d.client_secret);var n=new XMLHttpRequest;n.open("GET",e,!1),n.onload=function(){t(JSON.parse(n.response))},n.send()}function i(t){var r=t.getElementsByTagName("a");for(p=0;p<r.length;p++)!function(e){e.target="_"+(d.target||"top")}(r[p]);if(e.body.appendChild(t),e.body.className="ready",parent!==self&&parent.postMessage){var a=Math.max(e.body.scrollHeight,e.documentElement.scrollHeight,e.body.offsetHeight,e.documentElement.offsetHeight,e.body.clientHeight,e.documentElement.clientHeight);parent.postMessage({height:a,sender:d.identity||"*"},"*")}}function l(t){var a=f+"users/"+t;o(a,function(o){o=o||{};var l=o.message,c="0";l?(o=r(a)||o,c="?"):r(a,o),o.login=t,o.public_repos=u(o.public_repos)||c,o.public_gists=u(o.public_gists)||c,o.followers=u(o.followers)||c;var s="Not available for hire.";if(o.hireable){var p="";p=o.email?"mailto:"+o.email:o.blog?o.blog:o.html_url,s='<a href="'+p+'">Available for hire.</a>'}l&&(s=l),o.job=s;var f=e.createElement("div");f.className="github-card user-card",f.innerHTML=n("user",o),i(f)})}function c(t,a){var l=f+"repos/"+t+"/"+a;o(l,function(a){a=a||{};var o=a.message,c="0";o?(a=r(l)||a,c="?"):r(l,a),a.login=t,a.avatar_url="",a.owner&&a.owner.avatar_url&&(a.avatar_url=a.owner.avatar_url),a.forks_count=u(a.forks_count)||c,a.watchers_count=u(a.watchers_count)||c,a.action=a.fork?"Forked by ":"Created by ";var s=a.description;!s&&a.source&&(s=a.source.description),!s&&o&&(s=o),a.description=s||"No description";var p=a.homepage;!p&&a.source&&(p=a.source.homepage),a.homepage=p?' <a href="'+p+'">'+p.replace(/https?:\/\//,"").replace(/\/$/,"")+"</a>":"";var f=e.createElement("div");f.className="github-card repo-card",f.innerHTML=n("repo",a),i(f)})}function s(){}function u(e){return e?1e3===e?1:1e3>e?e:(e/=1e3,e>10?parseInt(e,10)+"k":e.toFixed(1)+"k"):null}var p,f="https://api.github.com/",d=t();d.user?d.repo?c(d.user,d.repo):l(d.user):s()}(document);
+(function(d) {
+  var baseurl = 'https://api.github.com/', i;
+
+  function querystring() {
+    var href = window.location.href, kv;
+    var params = href.slice(href.indexOf('?') + 1).split('&');
+    var qs = [];
+
+    for (i = 0; i < params.length; i++) {
+      kv = params[i].split('=');
+      qs.push(kv[0]);
+      qs[kv[0]] = kv[1];
+    }
+    return qs;
+  }
+
+  function store(key, value) {
+    try {
+      if (window.localStorage) {
+        if (value) {
+          value._timestamp = new Date().valueOf();
+          localStorage[key] = JSON.stringify(value);
+        } else {
+          var ret = localStorage[key];
+          if (ret) {
+            return JSON.parse(ret);
+          }
+          return null;
+        }
+      }
+    } catch(e) {}
+  }
+
+  function valueof(data, key) {
+    var ret = data;
+    var bits = key.split('.');
+    for (var j = 0; j < bits.length; j++) {
+      if (ret) {
+        ret = ret[bits[j]];
+      } else {
+        break;
+      }
+    }
+    if (ret === undefined || ret === null) {
+      return '';
+    }
+    return ret;
+  }
+
+  var qs = querystring();
+
+  function template(type, data) {
+    var t = d.getElementById(type + '-card');
+    var regex = /{([^}]+)}/g;
+    var text = t.innerHTML;
+    var m = text.match(regex);
+    for (i = 0; i < m.length; i++) {
+      text = text.replace(m[i], valueof(data, m[i].slice(1, -1)));
+    }
+    return text;
+  }
+
+  function request(url, callback) {
+    var cache = store(url);
+    if (cache && cache._timestamp) {
+      // cache in 10s
+      if (new Date().valueOf() - cache._timestamp < 10000) {
+        return callback(cache);
+      }
+    }
+    if (qs.client_id && qs.client_secret) {
+      url += '?client_id=' + qs.client_id + '&client_secret=' + qs.client_secret;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, false);
+    xhr.onload = function() {
+      callback(JSON.parse(xhr.response));
+    };
+    xhr.send();
+  }
+
+  function linky(card, identity) {
+    var links = card.getElementsByTagName('a');
+    for (i = 0; i < links.length; i++) {
+      (function(link) {
+        link.target = '_' + (qs.target || 'top');
+      })(links[i]);
+    }
+    d.body.appendChild(card);
+    d.body.className = 'ready';
+    if (parent !== self && parent.postMessage) {
+      var height = Math.max(
+        d.body.scrollHeight,
+        d.documentElement.scrollHeight,
+        d.body.offsetHeight,
+        d.documentElement.offsetHeight,
+        d.body.clientHeight,
+        d.documentElement.clientHeight
+      );
+      parent.postMessage({
+        height: height,
+        sender: qs.identity || '*'
+      }, '*');
+    }
+  }
+
+  function userCard(user) {
+    var url = baseurl + 'users/' + user;
+    request(url, function(data) {
+      data = data || {};
+      var message = data.message;
+      var defaults = '0';
+      if (message) {
+        data = store(url) || data;
+        defaults = '?';
+      } else {
+        store(url, data);
+      }
+      data.login = user;
+      data.public_repos = numberic(data.public_repos) || defaults;
+      data.public_gists = numberic(data.public_gists) || defaults;
+      data.followers = numberic(data.followers) || defaults;
+
+      var job = 'Not available for hire.';
+      if (data.hireable) {
+        var link = '';
+        if (data.email) {
+          link = 'mailto:' + data.email;
+        } else if (data.blog) {
+          link = data.blog;
+        } else {
+          link = data.html_url;
+        }
+        job = '<a href="' + link + '">Available for hire.</a>';
+      }
+      if (message) {
+        job = message;
+      }
+      data.job = job;
+
+      var card = d.createElement('div');
+      card.className = 'github-card user-card';
+      card.innerHTML = template('user', data);
+      linky(card);
+    });
+  }
+
+  function repoCard(user, repo) {
+    var url = baseurl + 'repos/' + user + '/' + repo;
+    request(url, function(data) {
+      data = data || {};
+      var message = data.message;
+      var defaults = '0';
+      if (message) {
+        data = store(url) || data;
+        defaults = '?';
+      } else {
+        store(url, data);
+      }
+      data.login = user;
+
+      data.avatar_url = '';
+      if (data.owner && data.owner.avatar_url) {
+        data.avatar_url = data.owner.avatar_url;
+      }
+      data.forks_count = numberic(data.forks_count) || defaults;
+      data.watchers_count = numberic(data.watchers_count) || defaults;
+      if (data.fork) {
+        data.action = 'Forked by ';
+      } else {
+        data.action = 'Created by ';
+      }
+      var description = data.description;
+      if (!description && data.source) {
+        description = data.source.description;
+      }
+      if (!description && message) {
+        description = message;
+      }
+      data.description = description || 'No description';
+      var homepage = data.homepage;
+      if (!homepage && data.source) {
+        homepage = data.source.homepage;
+      }
+      if (homepage) {
+        data.homepage = ' <a href="' + homepage + '">' + homepage.replace(/https?:\/\//, '').replace(/\/$/, '') + '</a>';
+      } else {
+        data.homepage = '';
+      }
+
+      var card = d.createElement('div');
+      card.className = 'github-card repo-card';
+      card.innerHTML = template('repo', data);
+      linky(card);
+    });
+  }
+
+  function errorCard() {
+  }
+
+  function numberic(num) {
+    if (!num) return null;
+    if (num === 1000) return 1;
+    if (num < 1000) return num;
+    num = num / 1000;
+    if (num > 10) return parseInt(num, 10) + 'k';
+    return num.toFixed(1) + 'k';
+  }
+
+  if (!qs.user) {
+    errorCard();
+  } else if (qs.repo) {
+    repoCard(qs.user, qs.repo);
+  } else {
+    userCard(qs.user);
+  }
+
+})(document);
+
 
 
 /*
