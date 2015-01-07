@@ -54,6 +54,9 @@ $(document).ready(function() {
         centerMode: true,
         centerPadding: '60px',
         slidesToShow: 1,
+        autoplay: true,
+        autoplaySpeed: 10000,
+        pauseOnHover: true,
         onAfterChange: function(e) {
             if ($(".slider1").hasClass("slick-center")) {
                 var textRainbow = $('.rainbowUrl').data('text');

@@ -10,8 +10,28 @@
     font-style: normal;
 }
 
+body{
+	font-family: 'bebas_neueregular';
+}
+
 #header {
-	margin-top: 30px;
+	background: #222;
+	position: fixed;
+	z-index: 9999;
+	width: 100%;
+	border-bottom: 1px #fc0 solid;
+
+	.navbar-default{
+		background: none;
+		border: none;
+		margin-bottom: 0;
+		padding: 10px 0;
+	
+		.navbar-brand{
+			color: #fc0;
+			font-size: 30px;
+		}
+	}
 }
 
 .sliderHome{
@@ -26,25 +46,36 @@
 }
 
 .portfolioUrl{
+	font-family: sans-serif;
 	position: absolute;
 	top: 29px;
-	margin-left: 108px;
+	margin-left: -346px;
 	font-size: 13px;
+	color: black;
 }
 
 .sliderBackgroundJustDance{
 	background-image: url(../images/justdanceBackground.jpg);
 }
 
+
+@-webkit-keyframes animatedBackground {
+  0% {    background-position: 0 0; }
+  100% {    background-position: 0 100%; } }
+
+@keyframes animatedBackground {
+  0% {    background-position: 0 0; }
+  100% {    background-position: 0 100%; } }
+
+
 .twetts{
-	background-image: url(../images/twettesBackground.jpg);
-	min-height: 0;
-	height: 100%;
-	position: relative;
-	background-size: cover;
-	background-attachment: fixed;
-	overflow: hidden;
 	padding: 80px 0;
+	 background-color: #222;
+	  width: 100%;
+	  background-image: url(http://i.imgur.com/Zc48ySX.png);
+	  background-position: 0px 0px;
+	  -webkit-animation: animatedBackground 100s linear infinite;
+	  animation: animatedBackground 100s linear infinite;
 }
 
 .odesk{
@@ -112,14 +143,33 @@
 }
 
 .responsive{
-	background: red;
+	background-color: #f4f4f4;
 	min-height: 0;
 	height: 100%;
 	position: relative;
 	background-size: cover;
 	background-attachment: fixed;
 	overflow: hidden;
-	padding: 100px 0;
+	padding: 40px 0;
+
+	h2{
+		color: #4183C4;
+		font-size: 65px;
+		margin-bottom: 25px;
+	}
+
+	p{
+		font-size: 18px;
+		line-height: 25px;
+		width: 650px;
+		display: inline-block;
+		font-family: sans-serif;
+	}
+
+	.resize-box{
+		margin-top: 45px;
+	}
+
 }
 
  @media (max-width: 1170px){
