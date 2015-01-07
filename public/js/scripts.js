@@ -95,17 +95,17 @@ $(document).ready(function() {
             if ($(".slider1").hasClass("slick-center")) {
                 var textRainbow = $('.rainbowUrl').data('text');
                 typeWriter(textRainbow, 0);
-                $('.sliderHome').css('background-image', 'url(../images/rainbowBackground.jpg)');
+                $('.sliderHome').css('background', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661513/cristianomatos-images/rainbowBackground.jpg)');
             }
             if ($(".slider2").hasClass("slick-center")) {
                 var textJust = $('.justUrl').data('text');
                 typeWriter(textJust, 0);
-                $('.sliderHome').css('background-image', 'url(../images/justdanceBackground.jpg)');
+                $('.sliderHome').css('background', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661512/cristianomatos-images/justdanceBackground.jpg)');
             }
             if ($(".slider3").hasClass("slick-center")) {
                 var textAvila = $('.avilaUrl').data('text');
                 typeWriter(textAvila, 0);
-                $('.sliderHome').css('background-image', 'url(../images/avilaBackground.jpg)');
+                $('.sliderHome').css('background', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661508/cristianomatos-images/avilaBackground.jpg)');
             }
         },
         onBeforeChange: function() {

@@ -6,15 +6,15 @@ block content
 				div.slider1: .sliderBackground 
 					a.portfolioUrl.rainbowUrl(href='http://rainbow6.ubi.com/', data-text='http://rainbow6.ubi.com/', target="_blank")
 					.imageContainer
-						img(src='/images/portfolio/rainbowsix.jpg')
+						img(src='http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661945/cristianomatos-images/portfolio/rainbowsix.jpg')
 				div.slider2: .sliderBackground
 					a.portfolioUrl.justUrl(href='http://just-dance.ubi.com/en-us/', data-text='http://just-dance.ubi.com/en-us/', target="_blank")
 					.imageContainer
-						img(src='/images/portfolio/justdance.jpg')
+						img(src='http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661949/cristianomatos-images/portfolio/justdance.jpg')
 				div.slider3: .sliderBackground 
 					a.portfolioUrl.avilaUrl(href='http://avilawebfirm.com', data-text='http://avilawebfirm.com', target="_blank")
 					.imageContainer
-						img(src='/images/portfolio/avilawebfirm.jpg')
+						img(src='http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661945/cristianomatos-images/portfolio/avilawebfirm.jpg')
 	section.responsive: .container.text-center
 			h2 responsive web apps
 			p With the explosion of mobile devices such as tablets and smart phones, there’s an ever-growing demand for websites that work on virtually every device. Your website, will load properly on smart phones, tablets, and just about any device.
@@ -53,27 +53,3 @@ block content
 				<script type="IN/MemberProfile" data-id="https://www.linkedin.com/in/cristianoveloz" data-format="inline" data-width="260" data-related="false"></script>
 	section.odesk: .container.text-center
 		p "Him works like a charm. Understand exactly the proposal of work and do it so fast. I'm very satisfied to have contract your services."
-
-
-
-block content
-	.container: .jumbotron
-		img(src='/images/logo.svg', width='160')
-		h1 Welcome
-		p This is your new <a href='http://keystonejs.com', target='_blank'>KeystoneJS</a> website.
-		p It includes the latest versions of
-			| <a href='http://getbootstrap.com/' target='_blank'>Bootstrap</a>
-			| and <a href='http://www.jquery.com/' target='_blank'>jQuery</a>.
-		p Visit the <a href='http://keystonejs.com/guide' target='_blank'>Getting Started</a> guide to learn how to customise it.
-		hr
-		if user && user.canAccessKeystone
-			p
-				a(href='/keystone/signin').btn.btn-lg.btn-primary Open the Admin UI
-		else
-			p We have created a default Admin user for you with the email <strong>user@keystonejs.com</strong> and the password <strong>admin</strong>.
-			p
-				a(href='/keystone/signin', style='margin-right: 10px').btn.btn-lg.btn-primary Sign in
-				|  to use the Admin UI.
-		hr
-		p Remember to <a href='https://github.com/JedWatson/keystone' target='_blank'>Star KeystoneJS on GitHub</a> and
-			| <a href='https://twitter.com/keystonejs' target='_blank'>follow @keystonejs</a> on twitter for updates.

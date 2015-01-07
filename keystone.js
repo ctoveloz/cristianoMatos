@@ -9,20 +9,6 @@ var keystone = require('keystone');
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
 
-var config = {
-  'consumerKey' : 'ce653cf1f55f7b22fc4d7b6597e50c97',
-  'consumerSecret' : '93c2b66850c58c17',
-//  'accessToken' : 'xxxxxxxx', // assign if known
-//  'accessSecret' : 'xxxxxxxx', // assign if known
-  'debug' : false
-};
-
-//var oDeskApi = require('../') // uncomment to use inside current package/sources
-var oDeskApi = require('odesk-api') // use if package is installed via npm
-//  , Auth = require('../lib/routers/auth').Auth // uncomment to use inside current package/sources
-  , Auth = require('odesk-api/lib/routers/auth').Auth // use if package is installed via npm
-  , rl = require('readline');
-
 keystone.init({
 	'cloudinary config': 'cloudinary://695316824865783:k0S8UONMrXUYsJj2I4Ii-yferjU@hsnbgtcq2',
 
@@ -111,79 +97,6 @@ keystone.set('nav', {
 	'enquiries': 'enquiries',
 	'users': 'users'
 });
-
-// a function to get access token/secret pair
-function getAccessTokenSecretPair(api, callback) {
-  // get authorization url
-  api.getAuthorizationUrl('http://localhost/complete', function(error, url, requestToken, requestTokenSecret) {
-    if (error) throw new Error('can not get authorization url, error: ' + error);
-    debug(requestToken, 'got a request token');
-    debug(requestTokenSecret, 'got a request token secret');
-
-    // authorize application
-    var i = rl.createInterface(process.stdin, process.stdout);
-    i.question('Please, visit an url ' + url + ' and enter a verifier: ', function(verifier) {
-      i.close();
-      process.stdin.destroy();
-      debug(verifier, 'entered verifier is');
-
-      // get access token/secret pair
-      api.getAccessToken(requestToken, requestTokenSecret, verifier, function(error, accessToken, accessTokenSecret) {
-        if (error) throw new Error(error);
-
-        debug(accessToken, 'got an access token');
-        debug(accessTokenSecret, 'got an access token secret');
-
-        callback(accessToken, accessTokenSecret);
-      });
-    });
-  });
-};
-
-// get my data
-function getUserData(api, callback) {
-  // make a call
-  var auth = new Auth(api);
-  auth.getUserInfo(function(error, data) {
-    // check error if needed and run your own error handler
-    callback(error, data);
-  });
-}
-
-(function main() {
-  // uncomment only if you want to use your own client
-  // make sure you know what you're doing
-  // var client = new MyClient(config);
-  // var api = new oDeskApi(null, client);
-
-  // use a predefined client for OAuth routine
-  var api = new oDeskApi(config);
-
-  if (!config.accessToken || !config.accessSecret) {
-    // run authorization in case we haven't done it yet
-    // and do not have an access token-secret pair
-    getAccessTokenSecretPair(api, function(accessToken, accessTokenSecret) {
-      debug(accessToken, 'current token is');
-      // store access token data in safe place!
-
-      // get my auth data
-      getUserData(api, function(error, data) {
-        debug(data, 'response');
-        console.log('Hello: ' + data.auth_user.first_name);
-      });
-    });
-  } else {
-    // setup access token/secret pair in case it is already known
-    api.setAccessToken(config.accessToken, config.accessSecret, function() {
-      // get my auth data
-      getUserData(api, function(error, data) {
-        debug(data, 'response');
-        // server_time
-        console.log('Hello: ' + data.auth_user.first_name);
-      });
-    });
-  }
-})();
 
 // Start Keystone to connect to your database and initialise the web server
 keystone.start();
