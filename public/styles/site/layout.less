@@ -12,7 +12,10 @@
 
 body{
 	font-family: 'bebas_neueregular';
+	-webkit-font-smoothing: antialiased;
 }
+
+
 
 #header {
 	background: #222;
@@ -37,13 +40,17 @@ body{
 		li{
 			a{
 				font-size: 19px;
+
+				&:hover{
+					color: #FFFFFF;
+				}
 			}
 		}
 	}
 }
 
 .sliderHome{
-	background: url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661513/cristianomatos-images/rainbowBackground.jpg);
+	background-image: url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661513/cristianomatos-images/rainbowBackground.jpg);
 	min-height: 0;
 	height: 100%;
 	position: relative;

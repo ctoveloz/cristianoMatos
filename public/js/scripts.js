@@ -95,17 +95,17 @@ $(document).ready(function() {
             if ($(".slider1").hasClass("slick-center")) {
                 var textRainbow = $('.rainbowUrl').data('text');
                 typeWriter(textRainbow, 0);
-                $('.sliderHome').css('background', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661513/cristianomatos-images/rainbowBackground.jpg)');
+                $('.sliderHome').css('background-image', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661513/cristianomatos-images/rainbowBackground.jpg)');
             }
             if ($(".slider2").hasClass("slick-center")) {
                 var textJust = $('.justUrl').data('text');
                 typeWriter(textJust, 0);
-                $('.sliderHome').css('background', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661512/cristianomatos-images/justdanceBackground.jpg)');
+                $('.sliderHome').css('background-image', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661512/cristianomatos-images/justdanceBackground.jpg)');
             }
             if ($(".slider3").hasClass("slick-center")) {
                 var textAvila = $('.avilaUrl').data('text');
                 typeWriter(textAvila, 0);
-                $('.sliderHome').css('background', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661508/cristianomatos-images/avilaBackground.jpg)');
+                $('.sliderHome').css('background-image', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661508/cristianomatos-images/avilaBackground.jpg)');
             }
         },
         onBeforeChange: function() {
@@ -129,6 +129,37 @@ $(document).ready(function() {
             }
         }]
     });
+
+	// smoth scroll
+	var html = document.documentElement;
+	var rAF, target = 0, scroll = 0;
+
+	onmousewheel = function(e) {
+	  e.preventDefault();
+	  var scrollEnd = html.scrollHeight - html.clientHeight;
+	  target += (e.wheelDelta > 0) ? -70 : 70;
+	  if (target < 0) target = 0;
+	  if (target > scrollEnd) target = scrollEnd;
+	  if (!rAF) rAF = requestAnimationFrame(animate);
+	};
+
+	onscroll = function() {
+	  if (rAF) return;
+	  target = pageYOffset || html.scrollTop;
+	  scroll = target;
+	};
+
+	function animate() {
+	  scroll += (target - scroll) * 0.1;
+	  if (Math.abs(scroll.toFixed(5) - target) <= 0.47131) {
+	    cancelAnimationFrame(rAF);
+	    rAF = false;
+	  }
+	  scrollTo(0, scroll);
+	  if (rAF) rAF = requestAnimationFrame(animate);
+	}
+
+
 
 
 });
