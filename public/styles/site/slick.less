@@ -90,7 +90,7 @@
     padding: 0;
     border: none;
     outline: none;
-    background-color: #7f8c8d;
+    background-color: #D1D1D1;
     width: 50px;
     height: 35px;
     box-shadow: 0 5px 0 0px #95a5a6;
@@ -101,7 +101,7 @@
   .slick-prev:active,
   .slick-next:active {
     box-shadow: 0 2px 0 0px #95a5a6;
-    margin-top: 0;
+    margin-top: -6px;
   }
     .slick-prev:hover:before, .slick-prev:focus:before,
     .slick-next:hover:before,
@@ -128,7 +128,14 @@
     left: auto;
     right: -25px; }
   .slick-prev:before {
-    content: "<"; }
+    content: "";
+    background: url(../images/arrows.png);
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    left: 10px;
+    top: 5px;
+  }
     [dir="rtl"] .slick-prev:before {
       content: "→"; }
 
@@ -138,7 +145,15 @@
     left: -25px;
     right: auto; }
   .slick-next:before {
-    content: ">"; }
+    content: "";
+    background: url(../images/arrows.png);
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    left: 11px;
+    top: 5px;
+    background-position: -30px 0;
+  }
     [dir="rtl"] .slick-next:before {
       content: "←"; }
 
