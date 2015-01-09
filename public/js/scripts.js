@@ -130,36 +130,6 @@ $(document).ready(function() {
         }]
     });
 
-	// smoth scroll
-	var html = document.documentElement;
-	var rAF, target = 0, scroll = 0;
-
-	onmousewheel = function(e) {
-	  e.preventDefault();
-	  var scrollEnd = html.scrollHeight - html.clientHeight;
-	  target += (e.wheelDelta > 0) ? -70 : 70;
-	  if (target < 0) target = 0;
-	  if (target > scrollEnd) target = scrollEnd;
-	  if (!rAF) rAF = requestAnimationFrame(animate);
-	};
-
-	onscroll = function() {
-	  if (rAF) return;
-	  target = pageYOffset || html.scrollTop;
-	  scroll = target;
-	};
-
-	function animate() {
-	  scroll += (target - scroll) * 0.1;
-	  if (Math.abs(scroll.toFixed(5) - target) <= 0.47131) {
-	    cancelAnimationFrame(rAF);
-	    rAF = false;
-	  }
-	  scrollTo(0, scroll);
-	  if (rAF) rAF = requestAnimationFrame(animate);
-	}
-
-
 
 
 });
