@@ -108,6 +108,11 @@ $(document).ready(function() {
                 typeWriter(textAvila, 0);
                 $('.sliderHome').css('background-image', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661508/cristianomatos-images/avilaBackground.jpg)');
             }
+            if ($(".slider4").hasClass("slick-active")) {
+                var textShark = $('.sharkUrl').data('text');
+                typeWriter(textShark, 0);
+                $('.sliderHome').css('background-image', 'url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1420661508/cristianomatos-images/avilaBackground.jpg)');
+            }
         },
         onBeforeChange: function() {
             $('.portfolioUrl').text('');
