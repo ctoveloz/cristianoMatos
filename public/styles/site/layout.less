@@ -33,6 +33,93 @@ body{
 		.navbar-brand{
 			color: #fc0;
 			font-size: 30px;
+			padding-top: 6px;
+
+			  &:before {
+			    content:'[';
+			    position:absolute;
+			    left: -6px;
+			    line-height:40px;
+			  }
+			  &:after {
+			    content:']';
+			    position:absolute;
+			    left: 231px;
+			    line-height:40px;
+			  }
+			  &:after, &:before {
+			    color: white;
+			    font-size:42px;
+			    animation:2s linear 0s normal none infinite opacity;
+			    -webkit-animation:2s ease-out 0s normal none infinite opacity;
+			    -moz-animation:2s ease-out 0s normal none infinite opacity;
+			    -o-animation:2s ease-out 0s normal none infinite opacity;
+			  }
+
+			.visible{
+				  float: left;
+				  font-weight:600;
+				  overflow:hidden;
+				  height:40px;  
+
+				  p{
+
+					  display:inline;
+					  float:left;
+					  margin:0;
+					  margin-top: 10px;
+				  }
+
+					ul {
+					  margin-top:0;
+					  padding-left:103px;
+					  text-align:left;
+					  list-style:none;
+					  animation:12s linear 0s normal none infinite change;
+					  -webkit-animation:12s linear 0s normal none infinite change;
+					  -moz-animation:12s linear 0s normal none infinite change;
+					  -o-animation:12s linear 0s normal none infinite change;
+					}
+
+					ul li {
+					  line-height:40px;
+					  margin:0;
+					}
+			}
+
+			@-webkit-keyframes opacity {
+			  0%   {opacity:0;}
+			  50%  {opacity:1;}
+			  100% {opacity:0;}
+			}
+			@keyframes opacity {
+			  0%   {opacity:0;}
+			  50%  {opacity:1;}
+			  100% {opacity:0;}
+			}
+
+			@-webkit-keyframes change {
+			  0%   {margin-top:0;}
+			  15%  {margin-top:0;}
+			  25%  {margin-top:-40px;}
+			  40%  {margin-top:-40px;}
+			  50%  {margin-top:-80px;}
+			  65%  {margin-top:-80px;}
+			  75%  {margin-top:-40px;}
+			  85%  {margin-top:-40px;}
+			  100% {margin-top:0;}
+			}
+			@keyframes change {
+			  0%   {margin-top:0;}
+			  15%  {margin-top:0;}
+			  25%  {margin-top:-40px;}
+			  40%  {margin-top:-40px;}
+			  50%  {margin-top:-80px;}
+			  65%  {margin-top:-80px;}
+			  75%  {margin-top:-40px;}
+			  85%  {margin-top:-40px;}
+			  100% {margin-top:0;}
+			}
 		}
 	}
 
