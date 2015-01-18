@@ -73,7 +73,7 @@ body{
 					ul {
 					  margin-top:0;
 					  padding-left:103px;
-					  text-align:left;
+					  text-align: center;
 					  list-style:none;
 					  animation:12s linear 0s normal none infinite change;
 					  -webkit-animation:12s linear 0s normal none infinite change;
@@ -87,39 +87,6 @@ body{
 					}
 			}
 
-			@-webkit-keyframes opacity {
-			  0%   {opacity:0;}
-			  50%  {opacity:1;}
-			  100% {opacity:0;}
-			}
-			@keyframes opacity {
-			  0%   {opacity:0;}
-			  50%  {opacity:1;}
-			  100% {opacity:0;}
-			}
-
-			@-webkit-keyframes change {
-			  0%   {margin-top:0;}
-			  15%  {margin-top:0;}
-			  25%  {margin-top:-40px;}
-			  40%  {margin-top:-40px;}
-			  50%  {margin-top:-80px;}
-			  65%  {margin-top:-80px;}
-			  75%  {margin-top:-40px;}
-			  85%  {margin-top:-40px;}
-			  100% {margin-top:0;}
-			}
-			@keyframes change {
-			  0%   {margin-top:0;}
-			  15%  {margin-top:0;}
-			  25%  {margin-top:-40px;}
-			  40%  {margin-top:-40px;}
-			  50%  {margin-top:-80px;}
-			  65%  {margin-top:-80px;}
-			  75%  {margin-top:-40px;}
-			  85%  {margin-top:-40px;}
-			  100% {margin-top:0;}
-			}
 		}
 	}
 
@@ -192,15 +159,6 @@ body{
 .sliderBackgroundJustDance{
 	background-image: url(../images/justdanceBackground.jpg);
 }
-
-
-@-webkit-keyframes animatedBackground {
-  0% {    background-position: 0 0; }
-  100% {    background-position: 0 100%; } }
-
-@keyframes animatedBackground {
-  0% {    background-position: 0 0; }
-  100% {    background-position: 0 100%; } }
 
 
 .twetts{
@@ -307,6 +265,9 @@ body{
 
 }
 
+
+// Media Queries
+
  @media (max-width: 1170px){
  	.sliderBackground{
  		width: 88%;
@@ -316,3 +277,48 @@ body{
  		}
  	}
  }
+
+
+// Keyframes
+
+@-webkit-keyframes opacity {
+	0%   {opacity:0;}
+	50%  {opacity:1;}
+	100% {opacity:0;}
+}
+@keyframes opacity {
+	0%   {opacity:0;}
+	50%  {opacity:1;}
+	100% {opacity:0;}
+}
+
+@-webkit-keyframes change {
+	0%   {margin-top:0;}
+	15%  {margin-top:0;}
+	25%  {margin-top:0;}
+	40%  {margin-top:0;}
+	50%  {margin-top:-40px;}
+	65%  {margin-top:-40px;}
+	75%  {margin-top:-80px;}
+	85%  {margin-top:-80px;}
+	100% {margin-top:0;}
+}
+@keyframes change {
+	0%   {margin-top:0;}
+	15%  {margin-top:0;}
+	25%  {margin-top:0;}
+	40%  {margin-top:0;}
+	50%  {margin-top:-40px;}
+	65%  {margin-top:-40px;}
+	75%  {margin-top:-80px;}
+	85%  {margin-top:-80px;}
+	100% {margin-top:0;}
+}
+
+@-webkit-keyframes animatedBackground {
+  0% {    background-position: 0 0; }
+  100% {    background-position: 0 100%; } }
+
+@keyframes animatedBackground {
+  0% {    background-position: 0 0; }
+  100% {    background-position: 0 100%; } }
