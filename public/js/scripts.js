@@ -142,5 +142,19 @@ $(document).ready(function() {
     });
 
 
+    // On Resize
+    $(window).on('resize', function(){
+      adjust_fixed_height_elements_onresize();
+    });
+
+    function adjust_fixed_height_elements_onresize(){
+      document_height = $(window).height();
+      header_height = $('#header').height();
+      $('.totalme').css('height', document_height - header_height + 'px');
+
+    };
+
+    adjust_fixed_height_elements_onresize();
+
 
 });
