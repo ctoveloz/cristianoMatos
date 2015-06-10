@@ -137,7 +137,8 @@ body{
 }
 
 .totalme{
-  background-image: url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1433884426/agoravai2_gtkdrj.jpg);
+  background-image: url(http://res.cloudinary.com/hsnbgtcq2/image/upload/v1433955399/agoravai3_ixirfn.jpg);
+  background-color: #a48502;
   background-size: cover;
   background-attachment: fixed;
   margin-top: 71px;
@@ -146,8 +147,8 @@ body{
 	.faceContainer{
 
 	  position: absolute;
-	  top: calc(60% - 285px);
-	  left: calc(50% - 293px);
+	  top: ~"calc(52% - 285px)";
+	  left: ~"calc(50% - 293px)";
 
 		img{
 		  width: 20%;
@@ -162,12 +163,14 @@ body{
 		h2{
 			color: white;
   			text-shadow: 3px 0px 1px rgba(0, 0, 0, 1);
+  			margin-bottom: 0;
 		}
 
 		p{
 			color: white;
 			text-shadow: 3px 0 1px #000;
 			font-size: 24px;
+			font-size: 20px;
 		}
 	}
 }
@@ -229,16 +232,41 @@ body{
 	background-size: cover;
 	background-attachment: fixed;
 	overflow: hidden;
-	padding: 100px 0;
+	padding: 70px 0;
 
-	p{
-		font-family: Verdana,Geneva,sans-serif;
-		color: white;
-		font-style: italic;
-		font-size: 21px;
-		text-shadow: 0px 0px 10px rgba(0, 0, 0, 20);
-		width: 50%;
-		display: inline-block;
+	.testimonial{
+
+		blockquote{
+		  margin: 10px 10px 0;
+		  background: rgba(138, 138, 138, 0.72);
+		  padding: 20px 60px;
+		  position: relative;
+		  border: none;
+		  border-radius: 8px;
+		  font-style: italic;
+		  font-family: serif;
+		  color: white;
+		}
+	}
+
+	.testimonial blockquote:before, .testimonial blockquote:after {
+		content: "\201C";
+		position: absolute;
+		font-size: 80px;
+		line-height: 1;
+		color: #fff;
+		font-style: normal;
+	}
+
+	.testimonial blockquote:before {
+		top: 0;
+		left: 10px;
+	}
+
+	.testimonial blockquote:after {
+		content: "\201D";
+		right: 10px;
+		bottom: -.5em;
 	}
 }
 
