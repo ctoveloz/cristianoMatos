@@ -44,6 +44,10 @@ function GithubRepo(a){this.description=a.description,this.forks=a.forks_count,t
 
 $(document).ready(function() {
 
+	Pace.on('done', function(){
+	  $('.faceContainer').addClass('fadeInUp');
+	});
+
     $("[data-repo]").github();
 
     function typeWriter(text, n) {
